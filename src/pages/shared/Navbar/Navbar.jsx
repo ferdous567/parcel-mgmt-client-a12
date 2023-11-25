@@ -1,4 +1,4 @@
-import { NavLink } from "react-router-dom";
+import { Link, NavLink } from "react-router-dom";
 import { FaHome } from "react-icons/fa";
 
 
@@ -23,6 +23,7 @@ const Navbar = () => {
                 </div>
             </button>
         </li>
+
     </>
 
     return (
@@ -37,7 +38,7 @@ const Navbar = () => {
                             {navItems}
                         </ul>
                     </div>
-                  <img className="h-[60px] w-[150px]" src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSI5_FjG5s3MQ_--DpMZP2wYRhrpJeqRjvYYA&usqp=CAU" alt="" />
+                    <img className="h-[60px] w-[150px]" src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSI5_FjG5s3MQ_--DpMZP2wYRhrpJeqRjvYYA&usqp=CAU" alt="" />
                 </div>
                 <div className="navbar-center hidden lg:flex">
                     <ul className="menu menu-horizontal px-1">
@@ -61,6 +62,9 @@ const Navbar = () => {
                                 </div>
                             </div>
                         </div>
+                        <Link to='/login'>
+                            <button className="btn btn-outline btn-secondary border-2 font-bold mx-5">Login</button>
+                        </Link>
                     </div>
                     {/* {
                     user ? <div>
