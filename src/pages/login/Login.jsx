@@ -10,6 +10,8 @@ const Login = () => {
         const email = form.email.value;
         const password = form.password.value;
         console.log(name, email, password);
+        // const user = {name, email, password, };
+        // console.log(user);
     }
 
     return (
@@ -46,6 +48,7 @@ const Login = () => {
                             <a href="#" className="label-text-alt link link-hover text-white">Forgottten password?</a>
                         </label>
                     </div>
+                    
 
                     <div className="form-control mt-6">
                         <input className="btn bg-gradient-to-r from-pink-500 to-orange-400 hover:from-green-400 hover:to-blue-500 text-white font-bold " type="submit" value="Login" />
