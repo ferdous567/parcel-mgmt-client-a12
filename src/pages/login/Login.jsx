@@ -1,7 +1,16 @@
+import { useContext } from "react";
 import { Helmet } from "react-helmet";
-import { Link } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
+import { AuthContext } from "../../provider/AuthProvider";
+import Swal from "sweetalert2";
 
 const Login = () => {
+
+    const {signInWithEmail} = useContext(AuthContext);
+    const navigate = useNavigate();
+    const location = useLocation();
+
+    const from = location.state?.from?.pathname || "/";
 
     const handleLogin = event => {
         event.preventDefault();
@@ -10,8 +19,22 @@ const Login = () => {
         const email = form.email.value;
         const password = form.password.value;
         console.log(name, email, password);
-        // const user = {name, email, password, };
-        // console.log(user);
+        
+        signInWithEmail(email, password)
+        .then(result => {
+            console.log(result.user);
+            Swal.fire({
+                title: "Good job!",
+                text: "Youre successfully Logged In!",
+                icon: "success"
+              });
+              navigate(from, {replace: true});
+        })
+        
+        .catch(err => {
+
+            console.error(err)
+        })
     }
 
     return (

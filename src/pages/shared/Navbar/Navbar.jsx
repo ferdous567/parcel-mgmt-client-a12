@@ -1,8 +1,17 @@
 import { Link, NavLink } from "react-router-dom";
 import { FaHome } from "react-icons/fa";
+import { useContext } from "react";
+import { AuthContext } from "../../../provider/AuthProvider";
 
 
 const Navbar = () => {
+    const { user, logOut } = useContext(AuthContext);
+
+    const handleLogout = () =>{
+        logOut()
+        .then(() =>{})
+        .catch(error => console.error(error))
+    }
     const navItems = <>
         <li><NavLink to='/'> <FaHome></FaHome> Home</NavLink></li>
         <li tabIndex={0}>
@@ -62,30 +71,31 @@ const Navbar = () => {
                                 </div>
                             </div>
                         </div>
-                        <Link to='/login'>
-                            <button className="btn btn-outline btn-secondary border-2 font-bold mx-5">Login</button>
-                        </Link>
                     </div>
-                    {/* {
-                    user ? <div>
-                        <div className="dropdown dropdown-end">
-                            <label tabIndex={0} className="btn btn-ghost btn-circle avatar">
-                                <div className="w-10 rounded-full">
-                                    <img src="user photoURL" />
-                                </div>
-                            </label>
-                            <ul tabIndex={0} className="mt-3 z-[1] p-2 shadow menu menu-xl dropdown-content bg-base-100 rounded-box w-62">
-                                <Link to='/dashboard'><li className="p-2 hover:text-blue-600 font-bold hover:underline">See Your Profile</li></Link>
-                                <li className="p-2">User email</li>
+                    {
+                        user ? <div>
+                            <div className="dropdown dropdown-end">
+                                
+                                <label tabIndex={0} className="btn btn-ghost btn-circle avatar">
+                                    <div   className="w-10 rounded-full">
+                                        <img src="user photoURL" />
+                                    </div >
+                                    
+                                </label>
+                                
+                                <ul tabIndex={0} className="mt-3 z-[1] p-2 shadow menu menu-xl dropdown-content bg-base-100 rounded-box w-[250px]">
+                                    <Link to='/dashboard'><li className="p-2 hover:text-blue-600 font-bold hover:underline">See Your Profile</li></Link>
+                                    <li className="p-2">{user?.email}</li>
 
-                                <button className="btn btn-outline btn-sm btn-success w-full">Log Out</button>
+                                    <button onClick={handleLogout} className="btn btn-outline btn-sm btn-success w-full">Log Out</button>
 
-                            </ul>
-                        </div>
-                    </div> : <Link to='/login'>
-                        Login
-                    </Link>
-                } */}
+                                </ul>
+                                
+                            </div>
+                        </div> : <Link to='/login'>
+                            <button className="btn btn-outline btn-info border-2 font-bold mx-5">Login</button>
+                        </Link>
+                    }
                 </div>
             </div>
         </div>
