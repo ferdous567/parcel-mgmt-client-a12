@@ -3,37 +3,63 @@ import { Helmet } from "react-helmet";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import { AuthContext } from "../../provider/AuthProvider";
 import Swal from "sweetalert2";
+import useAxiosPublic from "../../hooks/useAxiosPublic";
 
 const Login = () => {
 
-    const {signInWithEmail} = useContext(AuthContext);
+    const axiosPublic = useAxiosPublic();
+
+    const { signInWithEmail, googleSignIn } = useContext(AuthContext);
     const navigate = useNavigate();
     const location = useLocation();
 
     const from = location.state?.from?.pathname || "/";
+
+    const hanldeGoogleSignIn =() =>{
+        googleSignIn()
+        .then(result =>{
+            console.log(result.user);
+            const userInfo = {
+                email: result.user?.email,
+                name: result.user?.displayName,
+                role: 'User'
+            }
+            axiosPublic.post('/users', userInfo)
+            .then(res => {
+                console.log(res.data)
+            })
+            Swal.fire({
+                title: "Good job!",
+                text: "Youre successfully Logged In!",
+                icon: "success"
+            });
+            navigate(from, { replace: true });
+        })
+        .catch(err => console.error(err))
+    }
 
     const handleLogin = event => {
         event.preventDefault();
         const form = event.target;
         const email = form.email.value;
         const password = form.password.value;
-        console.log( email, password);
-        
-        signInWithEmail(email, password)
-        .then(result => {
-            console.log(result.user);
-            Swal.fire({
-                title: "Good job!",
-                text: "Youre successfully Logged In!",
-                icon: "success"
-              });
-              navigate(from, {replace: true});
-        })
-        
-        .catch(err => {
+        console.log(email, password);
 
-            console.error(err)
-        })
+        signInWithEmail(email, password)
+            .then(result => {
+                console.log(result.user);
+                Swal.fire({
+                    title: "Good job!",
+                    text: "Youre successfully Logged In!",
+                    icon: "success"
+                });
+                navigate(from, { replace: true });
+            })
+
+            .catch(err => {
+
+                console.error(err)
+            })
     }
 
     return (
@@ -44,15 +70,15 @@ const Login = () => {
                     ProShop Percel Mgmt | Login
                 </title>
             </Helmet>
-           
+
 
             <div className=" w-full md:w-[40%] text-center m-10 border 
             bg-gradient-to-r from-black/20 via-black/10 to-black/20 rounded-xl ">
 
-                <h3 className="text-5xl font-bold text-pink-500 text-center">Login Form</h3>
                 <div className="pl-36 mt-3">
-                <img className="h-[150px] w-[150px] rounded-full" src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQsRHg07AXas55VfI8f75uZbNOSIcyTKXcN7g&usqp=CAU" alt="" />
+                    <img className="h-[150px] w-[150px] rounded-full" src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQsRHg07AXas55VfI8f75uZbNOSIcyTKXcN7g&usqp=CAU" alt="" />
                 </div>
+                <h3 className="text-5xl font-bold text-pink-500 text-center">Login Form</h3>
                 <form onSubmit={handleLogin} className="card-body">
 
                     <div className="form-control">
@@ -70,7 +96,7 @@ const Login = () => {
                             <a href="#" className="label-text-alt link link-hover text-white">Forgottten password?</a>
                         </label>
                     </div>
-                    
+
 
                     <div className="form-control mt-6">
                         <input className="btn bg-gradient-to-r from-pink-500 to-orange-400 hover:from-green-400 hover:to-blue-500 text-white font-bold " type="submit" value="Login" />
@@ -83,13 +109,13 @@ const Login = () => {
 
                 <div className="text-center space-y-3 mb-2">
                     <h2 className="text-xl text-white font-bold">----Or Login With----</h2>
-                    <button
+                    <button onClick={hanldeGoogleSignIn}
                         className="btn bg-gradient-to-r from-green-400 to-blue-500 hover:from-violet-400 hover:to-cyan-300 text-white font-bold w-1/2">GOOGLE</button>
                 </div>
             </div>
             <div className="mt-20 ">
                 <img className="h-[400px] w-full" src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSK0kkOk3GF5pas7qUwOj8ymXZckR9_OiTmRQ&usqp=CAU" alt="" />
-               </div>
+            </div>
         </div>
     );
 };

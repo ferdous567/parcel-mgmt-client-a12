@@ -13,19 +13,30 @@ const Register = () => {
     const axiosPublic = useAxiosPublic();
 
     const { register, handleSubmit, reset, formState: { errors } } = useForm();
-    const { createUser, updateUserProfile } = useContext(AuthContext);
+    const { createUser, updateUserProfile, googleSignIn } = useContext(AuthContext);
     const navigate = useNavigate();
+
+    const hanldeGoogleSignIn =() =>{
+        googleSignIn()
+        .then(result =>{
+            console.log(result.user);
+            Swal.fire({
+                title: "Good job!",
+                text: "Youre successfully Logged In!",
+                icon: "success"
+            });
+            navigate('/');
+        })
+        .catch(err => console.error(err))
+    }
 
     const onSubmit = (data) => {
 
-        // const {email, password, name, role, photoURL} = data;
-        // const newUser = {email, password, name, role, photoURL };
-        // console.log(newUser);
         createUser(data.email, data.password)
             .then(result => {
                 const loggedUser = result.user;
                 console.log(loggedUser);
-                updateUserProfile(data.name, data.photoURL)
+                updateUserProfile(data.name, data.photo)
 
                     .then(() => {
                         const newUser = {
@@ -69,10 +80,11 @@ const Register = () => {
             <div className=" w-full md:w-[40%] m-10 border 
             bg-gradient-to-r from-black/20 via-black/10 to-black/20 rounded-xl ">
 
-                <h3 className="text-5xl font-bold text-pink-500 text-center">Registration Form</h3>
+                
                 <div className="pl-36 mt-3">
                     <img className="h-[150px] w-[150px] rounded-full" src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQsRHg07AXas55VfI8f75uZbNOSIcyTKXcN7g&usqp=CAU" alt="" />
                 </div>
+                <h3 className="text-5xl font-bold text-pink-500 text-center">Registration Form</h3>
                 <form onSubmit={handleSubmit(onSubmit)} className="card-body">
 
                     <div className="form-control">
@@ -101,9 +113,6 @@ const Register = () => {
                         {errors.password?.type === 'minLength' && <span className="text-red-500">Password is must 6 character</span>}
                         {errors.password?.type === 'pattern' && <span className="text-red-500">Password is must have one uppercase
                             , one lowercase, one number and a special character.</span>}
-                        <label className="label">
-                            <a href="#" className="label-text-alt link link-hover text-white">Forgottten password?</a>
-                        </label>
                     </div>
                     <div className="form-control">
                         <label className="label">
@@ -112,11 +121,28 @@ const Register = () => {
                         <input type="text" name="photo" {...register("photo", { required: true })} placeholder="PhotoURL" className="input input-bordered" />
                         {errors.photo && <span className="text-red-500">PhotoURL is required</span>}
                     </div>
-                    <div className="form-control">
+                    {/* <div className="form-control">
                         <label className="label">
                             <span className="label-text text-white">Role</span>
                         </label>
                         <input type="text" name="role" {...register("role", { required: true })} placeholder="User?/Deliveryman?" className="input input-bordered" />
+                        {errors.role && <span className="text-red-500">Role is required</span>}
+                    </div> */}
+
+                    <div className="form-control ">
+                        <label className="label">
+                            <span className="label-text">Role</span>
+                        </label>
+                        <label className="input-group">
+
+                            <select name='role' {...register("role", { required: true })} className="w-full p-2"  >
+                                <option value="">Select Role</option>
+                                <option value="user">User</option>
+                                <option value="deliveryMen">Delivery Men</option>
+
+
+                            </select>
+                        </label>
                         {errors.role && <span className="text-red-500">Role is required</span>}
                     </div>
 
@@ -131,7 +157,7 @@ const Register = () => {
 
                 <div className="text-center space-y-3 mb-2">
                     <h2 className="text-xl text-white font-bold">----Or Login With----</h2>
-                    <button
+                    <button onClick={hanldeGoogleSignIn}
                         className="btn bg-gradient-to-r from-green-400 to-blue-500 hover:from-violet-400 hover:to-cyan-300 text-white font-bold w-1/2">GOOGLE</button>
                 </div>
             </div>

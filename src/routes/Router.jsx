@@ -10,6 +10,10 @@ import Dashboard from "../pages/dashboard/Dashboard";
 import MyProfile from "../pages/dashboard/user/MyProfile";
 import MyPercel from "../pages/dashboard/user/MyPercel";
 import BookPercel from "../pages/dashboard/user/BookPercel";
+import AllPercels from "../pages/dashboard/admin/allPercels/AllPercels";
+import AllUsers from "../pages/dashboard/admin/allUsers/AllUsers";
+import AllDeleveryMen from "../pages/dashboard/admin/allDeleveryMen/AllDeleveryMen";
+import Statistics from "../pages/dashboard/admin/statictics/Statistics";
 
 
 const router = createBrowserRouter([
@@ -47,7 +51,28 @@ const router = createBrowserRouter([
             {
               path: 'bookPercel',
               element: <BookPercel></BookPercel>
-            }
+            },
+
+            // admin
+            {
+              path: 'allParcels',
+              element: <AllPercels></AllPercels>
+            },
+            {
+              path: 'allUsers',
+              element: <AllUsers></AllUsers>
+            },
+            {
+              path: 'allDeliveryMen',
+              element: <AllDeleveryMen></AllDeleveryMen>
+            },
+            {
+              path: 'statistics',
+              element: <Statistics></Statistics>
+            },
+            
+            // delivery men
+
           ]
         }
       ]
