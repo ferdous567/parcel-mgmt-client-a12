@@ -4,39 +4,57 @@ import { useForm } from "react-hook-form";
 import { Link, useNavigate } from "react-router-dom";
 import { AuthContext } from "../../provider/AuthProvider";
 import Swal from "sweetalert2";
+// import { updateProfile } from "firebase/auth";
+import useAxiosPublic from "../../hooks/useAxiosPublic";
 
 
 const Register = () => {
 
-    const { register,handleSubmit, reset,  formState: { errors }} = useForm();
-    const {createUser, updateUserProfile} = useContext(AuthContext);
+    const axiosPublic = useAxiosPublic();
+
+    const { register, handleSubmit, reset, formState: { errors } } = useForm();
+    const { createUser, updateUserProfile } = useContext(AuthContext);
     const navigate = useNavigate();
 
-      const onSubmit = (data) => {
-       
-        const {email, password, name, role, photoURL} = data;
-        const newUser = {email, password, name, role, photoURL };
-        console.log(newUser);
-        createUser(email, password)
-        .then(result => {
-            const loggedUser = result.user;
-            console.log(loggedUser);
-            updateUserProfile(name, photoURL)
-            .then(() =>{
-                console.log('user profile updated');
-                reset();
-                Swal.fire({
-                    title: "Good job!",
-                    text: "Registration succesfully please login!",
-                    icon: "success"
-                  });
-            })
-            .catch(error => console.error(error));
+    const onSubmit = (data) => {
 
-              navigate('/login')
-        })
-        
-      }
+        // const {email, password, name, role, photoURL} = data;
+        // const newUser = {email, password, name, role, photoURL };
+        // console.log(newUser);
+        createUser(data.email, data.password)
+            .then(result => {
+                const loggedUser = result.user;
+                console.log(loggedUser);
+                updateUserProfile(data.name, data.photoURL)
+
+                    .then(() => {
+                        const newUser = {
+                            name: data.name,
+                            email: data.email,
+                            role: data.role
+                        }
+                        axiosPublic.post('/users', newUser)
+                            .then(res => {
+                                if (res.data.insertedId) {
+                                    console.log('user added to the database');
+                                    reset();
+                                    Swal.fire({
+                                        title: "Good job!",
+                                        text: "Registration succesfully please login!",
+                                        icon: "success"
+                                    });
+                                    navigate('/login')
+                                }
+                            })
+
+
+                    })
+                    .catch(error => console.error(error.message));
+
+
+            })
+
+    }
 
     return (
         <div className=" bg-[url('https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS7wIT6aTvubsI-sn92uK71kfseZuIYdROfXw&usqp=CAU')] 
@@ -46,14 +64,14 @@ const Register = () => {
                     ProShop Percel Mgmt | Sign Up
                 </title>
             </Helmet>
-           
+
 
             <div className=" w-full md:w-[40%] m-10 border 
             bg-gradient-to-r from-black/20 via-black/10 to-black/20 rounded-xl ">
 
                 <h3 className="text-5xl font-bold text-pink-500 text-center">Registration Form</h3>
                 <div className="pl-36 mt-3">
-                <img className="h-[150px] w-[150px] rounded-full" src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQsRHg07AXas55VfI8f75uZbNOSIcyTKXcN7g&usqp=CAU" alt="" />
+                    <img className="h-[150px] w-[150px] rounded-full" src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQsRHg07AXas55VfI8f75uZbNOSIcyTKXcN7g&usqp=CAU" alt="" />
                 </div>
                 <form onSubmit={handleSubmit(onSubmit)} className="card-body">
 
@@ -61,26 +79,28 @@ const Register = () => {
                         <label className="label">
                             <span className="label-text text-white">Name</span>
                         </label>
-                        <input type="text" name="name" {...register("name", { required: true })} placeholder="Name" className="input input-bordered"  />
+                        <input type="text" name="name" {...register("name", { required: true })} placeholder="Name" className="input input-bordered" />
                         {errors.name && <span className="text-red-500">Name is required</span>}
                     </div>
                     <div className="form-control">
                         <label className="label">
                             <span className="label-text text-white">Email</span>
                         </label>
-                        <input type="email" name="email" {...register("email", { required: true })} placeholder="email" className="input input-bordered"  />
+                        <input type="email" name="email" {...register("email", { required: true })} placeholder="email" className="input input-bordered" />
                         {errors.email && <span className="text-red-500">Email is required</span>}
                     </div>
                     <div className="form-control">
                         <label className="label">
                             <span className="label-text text-white">Password</span>
                         </label>
-                        <input type="password" name="password" {...register("password", { required: true , 
-                            maxLength: 20, minLength: 6, pattern: /^(?=.*[0-9])(?=.*[!@#$%^&*])[a-zA-Z0-9!@#$%^&*]{6,16}$/})} 
-                            placeholder="password" className="input input-bordered"  />
+                        <input type="password" name="password" {...register("password", {
+                            required: true,
+                            maxLength: 20, minLength: 6, pattern: /^(?=.*[0-9])(?=.*[!@#$%^&*])[a-zA-Z0-9!@#$%^&*]{6,16}$/
+                        })}
+                            placeholder="password" className="input input-bordered" />
                         {errors.password?.type === 'minLength' && <span className="text-red-500">Password is must 6 character</span>}
                         {errors.password?.type === 'pattern' && <span className="text-red-500">Password is must have one uppercase
-                        , one lowercase, one number and a special character.</span>}
+                            , one lowercase, one number and a special character.</span>}
                         <label className="label">
                             <a href="#" className="label-text-alt link link-hover text-white">Forgottten password?</a>
                         </label>
@@ -89,14 +109,14 @@ const Register = () => {
                         <label className="label">
                             <span className="label-text text-white">PhotoURL</span>
                         </label>
-                        <input type="text" name="photo" {...register("photo", { required: true })} placeholder="PhotoURL" className="input input-bordered"  />
+                        <input type="text" name="photo" {...register("photo", { required: true })} placeholder="PhotoURL" className="input input-bordered" />
                         {errors.photo && <span className="text-red-500">PhotoURL is required</span>}
                     </div>
                     <div className="form-control">
                         <label className="label">
                             <span className="label-text text-white">Role</span>
                         </label>
-                        <input type="text" name="role" {...register("role", { required: true })} placeholder="User?/Deliveryman?" className="input input-bordered"  />
+                        <input type="text" name="role" {...register("role", { required: true })} placeholder="User?/Deliveryman?" className="input input-bordered" />
                         {errors.role && <span className="text-red-500">Role is required</span>}
                     </div>
 
@@ -117,7 +137,7 @@ const Register = () => {
             </div>
             <div className="mt-20 ">
                 <img className="h-[400px] w-full" src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSK0kkOk3GF5pas7qUwOj8ymXZckR9_OiTmRQ&usqp=CAU" alt="" />
-               </div>
+            </div>
         </div>
     );
 };

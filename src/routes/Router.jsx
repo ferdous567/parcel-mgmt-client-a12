@@ -6,6 +6,10 @@ import Contact from "../pages/Contact/Contact";
 import Login from "../pages/login/Login";
 import Register from "../pages/register/Register";
 import PrivateRoute from "./PrivateRoute";
+import Dashboard from "../pages/dashboard/Dashboard";
+import MyProfile from "../pages/dashboard/user/MyProfile";
+import MyPercel from "../pages/dashboard/user/MyPercel";
+import BookPercel from "../pages/dashboard/user/BookPercel";
 
 
 const router = createBrowserRouter([
@@ -24,6 +28,27 @@ const router = createBrowserRouter([
         {
           path: '/contact',
           element: <PrivateRoute><Contact></Contact></PrivateRoute>
+        },
+        {
+          path: '/dashboard',
+          element: <PrivateRoute>
+            <Dashboard></Dashboard>
+          </PrivateRoute>,
+          children:[
+            // user
+            {
+              path: 'myProfile',
+              element: <MyProfile></MyProfile>
+            },
+            {
+              path: 'myPercel',
+              element: <MyPercel></MyPercel>
+            },
+            {
+              path: 'bookPercel',
+              element: <BookPercel></BookPercel>
+            }
+          ]
         }
       ]
     },
