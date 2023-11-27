@@ -18,7 +18,7 @@ const AllUsers = () => {
         .then(res => {
             console.log(res.data);
             if(res.data.modifiedCount  > 0){
-                // refetch();
+                refetch();
                 Swal.fire({
                     title: "Congratulations!",
                     text: "You are admin now.",
@@ -28,11 +28,11 @@ const AllUsers = () => {
         })
     }
     const handleMakeDeli = user =>{
-        axiosSecure.patch(`/users/admin/${user._id}`)
+        axiosSecure.patch(`/users/deliveryMen/${user._id}`)
         .then(res => {
             console.log(res.data);
             if(res.data.modifiedCount  > 0){
-                // refetch();
+                refetch();
                 Swal.fire({
                     title: "Greate!",
                     text: "Now you are a Delivery Men.",
@@ -53,7 +53,7 @@ const AllUsers = () => {
             confirmButtonText: "Yes, delete it!"
           }).then((result) => {
             if (result.isConfirmed) {
-              
+            
               axiosSecure.delete(`/users/${user._id}`)
               .then(res =>{
                 console.log(res.data);
