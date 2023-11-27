@@ -1,4 +1,4 @@
-import { createBrowserRouter } from "react-router-dom";
+import { Navigate, createBrowserRouter } from "react-router-dom";
 import MainLayout from "../layout/MainLayout/MainLayout";
 import Home from "../pages/Home/Home/Home";
 import About from "../pages/About/About";
@@ -41,6 +41,18 @@ const router = createBrowserRouter([
             <Dashboard></Dashboard>
           </PrivateRoute>,
           children:[
+            {
+              index: true,
+              element: <Navigate to = '/dashboard/allUsers'></Navigate>
+            },
+            {
+              index: true,
+              element: <Navigate to = '/dashboard/myProfile'></Navigate>
+            },
+            {
+              index: true,
+              element: <Navigate to = '/dashboard/deliveryList'></Navigate>
+            },
             // user
             {
               path: 'myProfile',

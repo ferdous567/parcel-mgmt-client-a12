@@ -26,6 +26,7 @@ const BookPercel = () => {
             receiverPhone: data.receiversPhone,
             address: data.address,
             reqDate: data.date,
+            status: 'pending',
             orderDate: new Date()
         }
 
