@@ -14,6 +14,8 @@ import AllPercels from "../pages/dashboard/admin/allPercels/AllPercels";
 import AllUsers from "../pages/dashboard/admin/allUsers/AllUsers";
 import AllDeleveryMen from "../pages/dashboard/admin/allDeleveryMen/AllDeleveryMen";
 import Statistics from "../pages/dashboard/admin/statictics/Statistics";
+import MyDeliveryList from "../pages/dashboard/deliveryMen/myDeliveryList/MyDeliveryList";
+import MyReviews from "../pages/dashboard/deliveryMen/MyReviews/MyReviews";
 
 
 const router = createBrowserRouter([
@@ -72,6 +74,15 @@ const router = createBrowserRouter([
             },
             
             // delivery men
+
+            {
+              path: 'deliveryList',
+              element: <MyDeliveryList></MyDeliveryList>
+            },
+            {
+              path: 'reviews',
+              element: <MyReviews></MyReviews>
+            }
 
           ]
         }

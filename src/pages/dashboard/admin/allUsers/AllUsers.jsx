@@ -45,7 +45,7 @@ const AllUsers = () => {
     const handleDelete = (user) =>{
         Swal.fire({
             title: "Are you sure?",
-            text: "You won't be able to revert this!",
+            text: "You want to delete this!",
             icon: "warning",
             showCancelButton: true,
             confirmButtonColor: "#3085d6",
@@ -104,7 +104,7 @@ const AllUsers = () => {
                                     <td>{user.email}</td>
                                     
                                     <td>
-                                       { user?.role === 'DeliveryMen' ? "Delivery Men" : <button onClick={() => handleMakeDeli(user)}
+                                       { user?.role === 'deliveryMen' ? "Delivery Men" : <button onClick={() => handleMakeDeli(user)}
                                          className="btn btn-outline">
                                             <FaTruck className="text-xl font-bold text-orange-500 "></FaTruck></button>}
                                     </td>
