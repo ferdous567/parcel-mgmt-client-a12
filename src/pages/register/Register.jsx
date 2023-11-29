@@ -42,7 +42,8 @@ const Register = () => {
                         const newUser = {
                             name: data.name,
                             email: data.email,
-                            role: data.role
+                            role: data.role,
+                            image: data.photo
                         }
                         axiosPublic.post('/users', newUser)
                             .then(res => {
@@ -121,13 +122,7 @@ const Register = () => {
                         <input type="text" name="photo" {...register("photo", { required: true })} placeholder="PhotoURL" className="input input-bordered" />
                         {errors.photo && <span className="text-red-500">PhotoURL is required</span>}
                     </div>
-                    {/* <div className="form-control">
-                        <label className="label">
-                            <span className="label-text text-white">Role</span>
-                        </label>
-                        <input type="text" name="role" {...register("role", { required: true })} placeholder="User?/Deliveryman?" className="input input-bordered" />
-                        {errors.role && <span className="text-red-500">Role is required</span>}
-                    </div> */}
+                    
 
                     <div className="form-control ">
                         <label className="label">
@@ -145,6 +140,14 @@ const Register = () => {
                         </label>
                         {errors.role && <span className="text-red-500">Role is required</span>}
                     </div>
+
+                    {/* { {...register("role")} === 'deliveryMen' && <div className="form-control">
+                        <label className="label">
+                            <span className="label-text text-white">Phone</span>
+                        </label>
+                        <input type="text" name="phone" {...register("phone", { required: true })} placeholder="User?/Deliveryman?" className="input input-bordered" />
+                        {errors.phone && <span className="text-red-500">Phone is required</span>}
+                    </div>} */}
 
                     <div className="form-control mt-6">
                         <input className="btn bg-gradient-to-r from-pink-500 to-orange-400 hover:from-green-400 hover:to-blue-500 text-white font-bold " type="submit" value="Sign Up" />

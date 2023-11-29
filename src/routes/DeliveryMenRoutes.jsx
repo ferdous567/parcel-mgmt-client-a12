@@ -4,7 +4,7 @@ import { Navigate, useLocation } from "react-router-dom";
 import useDeliveryMen from "../hooks/useDeliveryMen";
 
 
-const DeliveryMenRoutes = (children) => {
+const DeliveryMenRoutes = ({children}) => {
     const {user, loading} = useContext(AuthContext);
     const [isDeliveryMen, isDeliveryMenLoading] = useDeliveryMen();
    
@@ -23,7 +23,7 @@ const DeliveryMenRoutes = (children) => {
         return children;
     }
 
-    return <Navigate to = '/login' state={{from: location}} replace></Navigate>
+    return <Navigate to = '/' state={{from: location}} replace></Navigate>
 };
 
 export default DeliveryMenRoutes;

@@ -19,7 +19,7 @@ const Dashboard = () => {
             <div>
 
                 <div className=" flex">
-                    <div className="w-1/3 p-8">
+                    <div className="w-1/4 p-8">
 
                         {
                             isAdmin ? <>
@@ -65,7 +65,7 @@ const Dashboard = () => {
 
 
                     </div>
-                    <div className="w-2/3 px-10 pt-10">
+                    <div className="w-3/4 px-10 pt-10">
                         <Outlet></Outlet>
                     </div>
                 </div>

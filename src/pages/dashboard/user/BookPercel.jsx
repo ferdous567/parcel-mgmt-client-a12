@@ -7,9 +7,9 @@ import Swal from "sweetalert2";
 const BookPercel = () => {
 
     const axiosPublic = useAxiosPublic();
-    const [price, setPrice] = useState(0);
+    const [price, setPrice] = useState('');
 
-    const { register, handleSubmit  } = useForm();
+    const { register, handleSubmit, errors  } = useForm();
     const {user} = useContext(AuthContext);
 
     const onSubmit = (data) => {
@@ -21,7 +21,7 @@ const BookPercel = () => {
             phone: data.phone,
             type: data.type,
             weight: data.weight,
-            price: data.prices,
+            price: data.price,
             receiverName: data.receiversName,
             receiverPhone: data.receiversPhone,
             address: data.address,
@@ -76,6 +76,7 @@ const BookPercel = () => {
                                 {...register("name", { required: true })} placeholder=" Name"
                                     className="input input-bordered w-full" />
                             </label>
+                            {errors.name && <span className="text-red-500">Required</span>}
                         </div>
                         <div className="form-control flex-[1]">
                             <label className="label">
@@ -86,6 +87,7 @@ const BookPercel = () => {
                                 <input type="text" defaultValue={user?.email}  {...register("email", { required: true })} placeholder="Email"
                                     className="input input-bordered w-full" />
                             </label>
+                            {errors.email && <span className="text-red-500">Required</span>}
                         </div> 
                     </div>
 
@@ -101,6 +103,7 @@ const BookPercel = () => {
                                 <input type="text" {...register("phone", { required: true })} placeholder="Phone"
                                     className="input input-bordered w-full" />
                             </label>
+                            {errors.phone && <span className="text-red-500">Required</span>}
                         </div>
                         <div className="form-control  md:ml-8 mb-5">
                             <label className="label">
@@ -110,6 +113,7 @@ const BookPercel = () => {
 
                                 <input type="text" {...register("type", { required: true })} placeholder="Type" className="input input-bordered w-full" />
                             </label>
+                            {errors.type && <span className="text-red-500">Required</span>}
                         </div>
                         <div className="form-control  md:ml-8 mb-5">
                             <label className="label">
@@ -119,9 +123,10 @@ const BookPercel = () => {
 
                                 <input type="number" 
                                 {...register("weight", { required: true })} 
-                                onChange={handleWeightCalc} min={0}
+                                onChange={handleWeightCalc} min={0} max={10}
                                 placeholder="Weight" className="input input-bordered w-full" />
                             </label>
+                            {errors.weight && <span className="text-red-500">Required</span>}
                         </div>
                     </div>
                     {/* row 3 */}
@@ -135,6 +140,7 @@ const BookPercel = () => {
                                 <input type="text" {...register("receiversName", { required: true })} placeholder="Receivers Name"
                                     className="input input-bordered w-full" />
                             </label>
+                            {errors.receiversName && <span className="text-red-500">Required</span>}
                         </div>
 
                         <div className="form-control md:w-1/3 md:ml-8 mb-5">
@@ -145,6 +151,7 @@ const BookPercel = () => {
 
                                 <input type="text" {...register("receiversPhone", { required: true })} placeholder="Receivers Phone" className="input input-bordered w-full" />
                             </label>
+                            {errors.receiversPhone && <span className="text-red-500">Required</span>}
                         </div>
                         <div className="form-control md:w-1/3 md:ml-8 mb-5">
                             <label className="label">
@@ -152,8 +159,9 @@ const BookPercel = () => {
                             </label>
                             <label className="input-group">
                            
-                                <input type="number" {...register("prices", { required: true })} placeholder="Price" value={price} className="input input-bordered w-full" />
+                                <input type="text" {...register("price", { required: true })} placeholder="Price" value={price} className="input input-bordered w-full" />
                             </label>
+                            {errors.price && <span className="text-red-500">Required</span>}
                         </div>
                     </div>
                     {/* row 4 */}
@@ -167,6 +175,7 @@ const BookPercel = () => {
                                 <input type="text" {...register("address", { required: true })}  placeholder="Address"
                                     className="input input-bordered w-full" />
                             </label>
+                            {errors.address && <span className="text-red-500">Required</span>}
                         </div>
                         <div className="form-control w-1/2">
                             <label className="label">
@@ -177,6 +186,7 @@ const BookPercel = () => {
                                 <input type="date" {...register("date", { required: true })}  placeholder="Address"
                                     className="input input-bordered w-full" />
                             </label>
+                            {errors.date && <span className="text-red-500">Required</span>}
                         </div>
 
                     </div>

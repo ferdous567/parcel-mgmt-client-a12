@@ -8,6 +8,11 @@ const Header = () => {
         <div className="relative">
 
             <SimpleSlider></SimpleSlider>
+            <div className="absolute top-28 left-10">
+                <h1 className="text-6xl font-bold text-yellow-500 mb-10"><span className="text-red-500 text-8xl font-extrabold">Welcome</span> To Our 
+                <span className="text-green-500 text-8xl"> ProShop</span> <br /> Parcel Management...</h1>
+                <input type="text" placeholder="Search here" className="input input-bordered input-primary w-full max-w-md" />
+            </div>
             <motion.div
                 animate={{
                     scale: [1, 2, 2, 1, 1],

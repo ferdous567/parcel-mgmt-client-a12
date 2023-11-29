@@ -44,7 +44,7 @@ const AuthProvider = ({ children }) => {
             if (currentUser) {
                 // get token and store
                 const userInfo = { email: currentUser.email }
-                axios.post('https://parcel-mgmt-server-gm4mzoy5m-khaledas-projects.vercel.app/jwt', userInfo)
+                axios.post('http://localhost:5174/jwt', userInfo)
                     .then(res => {
                         if (res.data.token) {
                             localStorage.setItem('access-token', res.data.token)
@@ -73,7 +73,7 @@ const AuthProvider = ({ children }) => {
 
 
     const updateUserProfile = (name, photo) => {
-
+        setLoading(true)
         return updateProfile(auth.currentUser, {
             displayName: name,
             photoURL: photo

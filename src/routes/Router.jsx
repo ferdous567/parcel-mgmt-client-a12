@@ -16,6 +16,9 @@ import AllDeleveryMen from "../pages/dashboard/admin/allDeleveryMen/AllDeleveryM
 import Statistics from "../pages/dashboard/admin/statictics/Statistics";
 import MyDeliveryList from "../pages/dashboard/deliveryMen/myDeliveryList/MyDeliveryList";
 import MyReviews from "../pages/dashboard/deliveryMen/MyReviews/MyReviews";
+import AdminRoutes from "./AdminRoutes";
+import DeliveryMenRoutes from "./DeliveryMenRoutes";
+import ManageAdmin from "../pages/dashboard/admin/ManageAdmin";
 
 
 const router = createBrowserRouter([
@@ -41,18 +44,18 @@ const router = createBrowserRouter([
             <Dashboard></Dashboard>
           </PrivateRoute>,
           children:[
-            {
-              index: true,
-              element: <Navigate to = '/dashboard/allUsers'></Navigate>
-            },
-            {
-              index: true,
-              element: <Navigate to = '/dashboard/myProfile'></Navigate>
-            },
-            {
-              index: true,
-              element: <Navigate to = '/dashboard/deliveryList'></Navigate>
-            },
+            // {
+            //   index: true,
+            //   element: <Navigate to = '/dashboard/statistics'></Navigate>
+            // },
+            // {
+            //   index: true,
+            //   element: <Navigate to = '/dashboard/myProfile'></Navigate>
+            // },
+            // {
+            //   index: true,
+            //   element: <Navigate to = '/dashboard/deliveryList'></Navigate>
+            // },
             // user
             {
               path: 'myProfile',
@@ -70,30 +73,46 @@ const router = createBrowserRouter([
             // admin
             {
               path: 'allParcels',
-              element: <AllPercels></AllPercels>
+              element: <AdminRoutes>
+                <AllPercels></AllPercels>
+              </AdminRoutes>
             },
             {
               path: 'allUsers',
-              element: <AllUsers></AllUsers>
+              element: <AdminRoutes>
+                <AllUsers></AllUsers>
+              </AdminRoutes>
             },
             {
               path: 'allDeliveryMen',
-              element: <AllDeleveryMen></AllDeleveryMen>
+              element: <AdminRoutes><AllDeleveryMen></AllDeleveryMen></AdminRoutes>
             },
             {
               path: 'statistics',
-              element: <Statistics></Statistics>
+              element: <AdminRoutes>
+                <Statistics></Statistics>
+              </AdminRoutes>
+            },
+            {
+              path: 'manageAdmin',
+              element: <AdminRoutes>
+                <ManageAdmin></ManageAdmin>
+              </AdminRoutes>
             },
             
             // delivery men
 
             {
               path: 'deliveryList',
-              element: <MyDeliveryList></MyDeliveryList>
+              element: <DeliveryMenRoutes>
+                <MyDeliveryList></MyDeliveryList>
+              </DeliveryMenRoutes>
             },
             {
               path: 'reviews',
-              element: <MyReviews></MyReviews>
+              element: <DeliveryMenRoutes>
+                <MyReviews></MyReviews>
+              </DeliveryMenRoutes>
             }
 
           ]
