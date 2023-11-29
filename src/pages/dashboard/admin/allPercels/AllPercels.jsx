@@ -1,9 +1,14 @@
 import { useQuery } from "@tanstack/react-query";
 import useAxiosSecure from "../../../../hooks/useAxiosSecure";
-import { Link } from "react-router-dom";
+// import { Link } from "react-router-dom";
+// import Modal from "../Modal";
+import ParcelRow from "./ParcelRow";
+import { useState } from "react";
 // import useAxiosPublic from "../../../../hooks/useAxiosPublic";
 
 const AllPercels = () => {
+
+    let [isOpen, setIsOpen] = useState(false);
 
     // const axiosPublic = useAxiosPublic();
 
@@ -17,7 +22,14 @@ const AllPercels = () => {
         }
     })
 
+    function closeModal() {
+        setIsOpen(false)
+      }
     
+      function openModal() {
+        setIsOpen(true)
+      }
+
 
     return (
         <div>
@@ -40,25 +52,9 @@ const AllPercels = () => {
                     <tbody>
 
                         {
-                            allPercel.map((user, index) => <tr key={user._id}>
-
-                                
-
-                                <th>{index + 1}</th>
-                                <td>{user.name}</td>
-                                <td>{user.phone}</td>
-                                <td>{user.price}</td>
-                                <th>{user.orderDate}</th>
-                                <td>{user.reqDate}</td>
-                                <td>{user.status}</td>
-                                <td>
-                                <button className="btn btn-sm">Manage</button>
-                                    {/* <Link to = '/dashboard/manageAdmin'>
-                                    <button className="btn btn-sm">Manage</button>
-                                    </Link> */}
-                                </td>
-
-                            </tr>)
+                            allPercel.map((user, index) => <ParcelRow  key={user._id} 
+                            closeModal = {closeModal} openModal= {openModal} isOpen = {isOpen}
+                            user={user} index={index}></ParcelRow>)
                         }
 
                     </tbody>

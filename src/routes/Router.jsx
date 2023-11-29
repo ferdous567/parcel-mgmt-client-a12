@@ -1,4 +1,4 @@
-import { Navigate, createBrowserRouter } from "react-router-dom";
+import { createBrowserRouter } from "react-router-dom";
 import MainLayout from "../layout/MainLayout/MainLayout";
 import Home from "../pages/Home/Home/Home";
 import About from "../pages/About/About";
@@ -94,10 +94,12 @@ const router = createBrowserRouter([
               </AdminRoutes>
             },
             {
-              path: 'manageAdmin',
+              path: 'manageAdmin/:id',
               element: <AdminRoutes>
                 <ManageAdmin></ManageAdmin>
               </AdminRoutes>
+              // loader: ({params}) => fetch(`http://localhost:5174/manageItems/${params.id}`)
+
             },
             
             // delivery men
