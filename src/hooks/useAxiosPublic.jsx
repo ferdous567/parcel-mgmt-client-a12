@@ -3,7 +3,7 @@ import axios from "axios";
 
 export const axiosPublic = axios.create({
 
-    baseURL: 'http://localhost:5174'
+    baseURL: 'https://parcel-mgmt-server.vercel.app'
 })
 
 const useAxiosPublic = () => {

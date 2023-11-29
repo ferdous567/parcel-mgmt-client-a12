@@ -44,7 +44,7 @@ const AuthProvider = ({ children }) => {
             if (currentUser) {
                 // get token and store
                 const userInfo = { email: currentUser.email }
-                axios.post('http://localhost:5174/jwt', userInfo)
+                axios.post('https://parcel-mgmt-server.vercel.app/jwt', userInfo)
                     .then(res => {
                         if (res.data.token) {
                             localStorage.setItem('access-token', res.data.token)

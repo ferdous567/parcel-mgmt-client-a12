@@ -19,6 +19,7 @@ import MyReviews from "../pages/dashboard/deliveryMen/MyReviews/MyReviews";
 import AdminRoutes from "./AdminRoutes";
 import DeliveryMenRoutes from "./DeliveryMenRoutes";
 import ManageAdmin from "../pages/dashboard/admin/ManageAdmin";
+import UpdateMyPercel from "../pages/dashboard/user/UpdateMyParcel";
 
 
 const router = createBrowserRouter([
@@ -69,6 +70,10 @@ const router = createBrowserRouter([
               path: 'bookPercel',
               element: <BookPercel></BookPercel>
             },
+            {
+              path: 'updateMyParcel/:id',
+              element: <UpdateMyPercel></UpdateMyPercel>
+            },
 
             // admin
             {
@@ -98,7 +103,7 @@ const router = createBrowserRouter([
               element: <AdminRoutes>
                 <ManageAdmin></ManageAdmin>
               </AdminRoutes>
-              // loader: ({params}) => fetch(`http://localhost:5174/manageItems/${params.id}`)
+              // loader: ({params}) => fetch(`https://parcel-mgmt-server.vercel.app/manageItems/${params.id}`)
 
             },
             

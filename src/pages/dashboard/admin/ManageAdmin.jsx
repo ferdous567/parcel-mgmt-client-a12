@@ -1,5 +1,5 @@
 
-import { useLoaderData, useParams } from "react-router-dom";
+import {  useParams } from "react-router-dom";
 import useAxiosSecure from "../../../hooks/useAxiosSecure";
 import { useQuery } from "@tanstack/react-query";
 
@@ -8,8 +8,7 @@ import { useQuery } from "@tanstack/react-query";
 
 const ManageAdmin = () => {
 
-    // const getBookings = useLoaderData();
-    // console.log(getBookings);
+    
 
     const {id: bookingsId} = useParams();
     console.log(bookingsId)

@@ -3,12 +3,12 @@ import useAxiosSecure from "../../../../hooks/useAxiosSecure";
 // import { Link } from "react-router-dom";
 // import Modal from "../Modal";
 import ParcelRow from "./ParcelRow";
-import { useState } from "react";
+
 // import useAxiosPublic from "../../../../hooks/useAxiosPublic";
 
 const AllPercels = () => {
 
-    let [isOpen, setIsOpen] = useState(false);
+   
 
     // const axiosPublic = useAxiosPublic();
 
@@ -22,14 +22,7 @@ const AllPercels = () => {
         }
     })
 
-    function closeModal() {
-        setIsOpen(false)
-      }
-    
-      function openModal() {
-        setIsOpen(true)
-      }
-
+  
 
     return (
         <div>
@@ -53,7 +46,7 @@ const AllPercels = () => {
 
                         {
                             allPercel.map((user, index) => <ParcelRow  key={user._id} 
-                            closeModal = {closeModal} openModal= {openModal} isOpen = {isOpen}
+                           
                             user={user} index={index}></ParcelRow>)
                         }
 

@@ -5,7 +5,7 @@ import { AuthContext } from "../provider/AuthProvider";
 
 
 const axiosSecure = axios.create({
-    baseURL: 'http://localhost:5174'
+    baseURL: 'https://parcel-mgmt-server.vercel.app'
 })
 
 const useAxiosSecure = () => {

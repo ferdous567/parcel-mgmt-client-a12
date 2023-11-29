@@ -3,6 +3,7 @@ import useAxiosSecure from "../../../../hooks/useAxiosSecure";
 
 const AllDeleveryMen = () => {
 
+
     const axiosSecure = useAxiosSecure();
     const {data: deliveryMen = []} = useQuery({
         queryKey: ['deliveryMens'],
@@ -15,10 +16,13 @@ const AllDeleveryMen = () => {
         }
         
     })
-    // console.log(deliveryMen)
+
+    
+
+   
     return (
         <div>
-             <h3 className="text-3xl font-bold text-center underline">All Delevery Men</h3>
+             <h3 className="text-3xl font-bold text-center underline">All Delivery Men</h3>
 
              <div className="overflow-x-auto">
                     <table className="table table-zebra">
@@ -27,7 +31,7 @@ const AllDeleveryMen = () => {
                             <tr>
                                 <th></th>
                                 <th>Name</th>
-                                <th>Phone</th>
+                                <th>Email</th>
                                 <th>Number of Parcel</th>
                                 <th>Avarage Review</th>
                             </tr>
@@ -40,6 +44,7 @@ const AllDeleveryMen = () => {
                                     <th>{index + 1}</th>
                                     <td>{user.name}</td>
                                     <td>{user.email}</td>
+                                    <td></td>
                                    
                                 </tr>)
                             }

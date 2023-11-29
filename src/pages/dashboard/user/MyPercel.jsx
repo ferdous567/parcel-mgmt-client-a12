@@ -2,11 +2,17 @@ import { useQuery } from "@tanstack/react-query";
 import useAxiosSecure from "../../../hooks/useAxiosSecure";
 import { useContext } from "react";
 import { AuthContext } from "../../../provider/AuthProvider";
+import { Link } from "react-router-dom";
+import Swal from "sweetalert2";
 
 const MyPercel = () => {
+
+    // const {id: bookingsId} = useParams();
+    // console.log(bookingsId);
+
     const {user} = useContext(AuthContext);
     const axiosSecure = useAxiosSecure();
-    const { data: myPercels = [] } = useQuery({
+    const { data: myPercels = [], refetch } = useQuery({
         queryKey: ['myPercels'],
         queryFn: async () => {
             const res = await axiosSecure.get(`/bookings?email=${user.email}`)
@@ -14,6 +20,39 @@ const MyPercel = () => {
             return res.data;
         }
     })
+    const handleDelete = (user) =>{
+        Swal.fire({
+            title: "Are you sure?",
+            text: "You want to delete this!",
+            icon: "warning",
+            showCancelButton: true,
+            confirmButtonColor: "#3085d6",
+            cancelButtonColor: "#d33",
+            confirmButtonText: "Yes, delete it!"
+          }).then((result) => {
+            if (result.isConfirmed) {
+            
+              axiosSecure.delete(`/deleteMyBookings/${user._id}`)
+              .then(res =>{
+                console.log(res.data);
+                if(res.data.deletedCount > 0){
+                  refetch();
+                  console.log('data deleted');
+    
+                  Swal.fire({
+                    title: "Deleted!",
+                    text: "Your file has been deleted.",
+                    icon: "success"
+                  });
+    
+                }
+                
+              })
+            }
+          });
+    }
+
+   
 
     return (
         <div className="w-full">
@@ -43,16 +82,18 @@ const MyPercel = () => {
                                 <th>{index + 1}</th>
                                 <td>{user.type}</td>
                                 <td>{user.reqDate}</td>
-                                <td></td>
+                                <td>{user.date}</td>
                                 <td>{user.orderDate} </td>
-                                <td></td>
+                                <td>{user.deliveryMen}</td>
                                 <td>{user.status}</td>
                                 <td>
+                                <Link to = {`/dashboard/updateMyParcel/${user._id}`}>
                                 {user?.status === 'pending' ? <button className="btn btn-sm btn-secondary">Update</button>
                                     : <button className="btn btn-sm btn-disabled">Update</button>}
+                                </Link>
                                 </td>
                                 <td>
-                                    {user?.status === 'pending' ? <button className="btn btn-sm btn-primary">Cancel</button>
+                                    {user?.status === 'pending' ? <button onClick={() => handleDelete(user)} className="btn btn-sm btn-primary">Cancel</button>
                                     : <button className="btn btn-sm btn-disabled">Cancel</button>}
                                 </td>
 

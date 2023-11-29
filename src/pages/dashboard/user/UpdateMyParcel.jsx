@@ -1,10 +1,16 @@
+
 import { useContext, useState } from "react";
 import { AuthContext } from "../../../provider/AuthProvider";
 import { useForm } from "react-hook-form";
 import useAxiosPublic from "../../../hooks/useAxiosPublic";
 import Swal from "sweetalert2";
+import { useParams } from "react-router-dom";
+import { data } from "autoprefixer";
 
-const BookPercel = () => {
+const UpdateMyPercel = () => {
+
+    const {id: bookingsId} = useParams();
+    console.log(bookingsId)
 
     const axiosPublic = useAxiosPublic();
     const [price, setPrice] = useState('');
@@ -30,14 +36,14 @@ const BookPercel = () => {
             orderDate: new Date()
         }
 
-        axiosPublic.post('/bookings', bookItems)
+        axiosPublic.patch(`/updatePercel/${bookingsId}`, bookItems)
         .then(res => {
-            if (res.data.insertedId) {
+            if (res.data.modifiedCount > 0) {
                 console.log('booking added to the database');
                
                 Swal.fire({
                     title: "Good job!",
-                    text: "Your booking is received successfully.",
+                    text: "Your update is successfully.",
                     icon: "success"
                 });
                
@@ -62,7 +68,7 @@ const BookPercel = () => {
             
             <div className="bg-[#f4f3f0] w-full mx-auto p-8">
 
-                <h2 className="text-3xl font-extrabold text-center mb-10">Book Percel</h2>
+                <h2 className="text-3xl font-extrabold text-center mb-10">Update Percel</h2>
                 <form onSubmit={handleSubmit(onSubmit)} className="w-full mx-auto">
                     {/* row 1 */}
                     <div className=" flex w-full gap-4">
@@ -100,7 +106,7 @@ const BookPercel = () => {
                             </label>
                             <label className="input-group">
 
-                                <input type="text" {...register("phone", { required: true })} placeholder="Phone"
+                                <input type="text" defaultValue={data.phone} {...register("phone", { required: true })} placeholder="Phone"
                                     className="input input-bordered w-full" />
                             </label>
                             {errors?.phone && <span className="text-red-500">Required</span>}
@@ -217,7 +223,7 @@ const BookPercel = () => {
 
                     {/* row 6 */}
                     <div className="my-5 ">
-                        <input type="submit" value="Book Now" className="btn btn-success w-full" />
+                        <input type="submit" value="Update Now" className="btn btn-success w-full" />
                     </div>
                 </form>
             </div>
@@ -225,4 +231,4 @@ const BookPercel = () => {
     );
 };
 
-export default BookPercel;
+export default UpdateMyPercel;
