@@ -20,12 +20,14 @@ import AdminRoutes from "./AdminRoutes";
 import DeliveryMenRoutes from "./DeliveryMenRoutes";
 import ManageAdmin from "../pages/dashboard/admin/ManageAdmin";
 import UpdateMyPercel from "../pages/dashboard/user/UpdateMyParcel";
+import ErrorPage from "../pages/errorPage/ErrorPage";
 
 
 const router = createBrowserRouter([
     {
       path: "/",
       element: <MainLayout></MainLayout>,
+      errorElement: <ErrorPage></ErrorPage>,
       children:[
         {
             path: '/',
@@ -44,19 +46,13 @@ const router = createBrowserRouter([
           element: <PrivateRoute>
             <Dashboard></Dashboard>
           </PrivateRoute>,
+          errorElement: <ErrorPage></ErrorPage>,
           children:[
             // {
             //   index: true,
             //   element: <Navigate to = '/dashboard/statistics'></Navigate>
             // },
-            // {
-            //   index: true,
-            //   element: <Navigate to = '/dashboard/myProfile'></Navigate>
-            // },
-            // {
-            //   index: true,
-            //   element: <Navigate to = '/dashboard/deliveryList'></Navigate>
-            // },
+            
             // user
             {
               path: 'myProfile',

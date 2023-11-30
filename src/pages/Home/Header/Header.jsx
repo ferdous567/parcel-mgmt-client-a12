@@ -1,9 +1,35 @@
+import { useQuery } from "@tanstack/react-query";
+import useAxiosPublic from "../../../hooks/useAxiosPublic";
 import SimpleSlider from "../Banner/Banner";
 import { motion } from "framer-motion";
+import CountUp from 'react-countup';
 <link rel="stylesheet" href="bower_components/aos/dist/aos.css" />
 
 
 const Header = () => {
+
+
+    const axiosPublic = useAxiosPublic();
+    const {data: allUsers = []} = useQuery({
+        queryKey: ['allUsersData'],
+        queryFn: async () =>{
+            const res = await axiosPublic.get('/users')
+            console.log(res.data);
+            return res.data;
+        }
+    })
+
+    const {data: bookedItem = []} = useQuery({
+        queryKey: ['bookedItem'],
+        queryFn: async () =>{
+            const res = await axiosPublic.get('/totalBookings')
+            console.log(res.data);
+            return res.data;
+        }
+    })
+
+
+
     return (
         <div className="relative">
 
@@ -36,20 +62,24 @@ const Header = () => {
                     <div className="stats shadow w-3/4">
 
                         <div className="stat place-items-center" >
-                            <div className="stat-title">Downloads</div>
-                            <div className="stat-value">31K</div>
-                            <div className="stat-desc">From January 1st to February 1st</div>
+                            <div className="stat-title">Booked</div>
+                            <div className="stat-value">
+                               <CountUp end={bookedItem.length} duration={1}> </CountUp> </div>
+                            <div className="stat-desc">Total Booked Items</div>
                         </div>
 
                         <div className="stat place-items-center" >
                             <div className="stat-title">Users</div>
-                            <div className="stat-value text-secondary">4,200</div>
+                            <div className="stat-value text-secondary">
+                            <CountUp end={allUsers.length} duration={2}> </CountUp>
+                                </div>
                             <div className="stat-desc text-secondary">↗︎ 40 (2%)</div>
                         </div>
 
                         <div className="stat place-items-center " >
                             <div className="stat-title">New Registers</div>
-                            <div className="stat-value">1,200</div>
+                            <div className="stat-value">
+                            <CountUp end={100} duration={5}> </CountUp></div>
                             <div className="stat-desc">↘︎ 90 (14%)</div>
                         </div>
 

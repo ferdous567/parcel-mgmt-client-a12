@@ -1,14 +1,15 @@
 
-import {  useParams } from "react-router-dom";
+import {  useNavigate, useParams } from "react-router-dom";
 import useAxiosSecure from "../../../hooks/useAxiosSecure";
 import { useQuery } from "@tanstack/react-query";
+import Swal from "sweetalert2";
 
 
 
 
 const ManageAdmin = () => {
 
-    
+    const navigate = useNavigate();
 
     const {id: bookingsId} = useParams();
     console.log(bookingsId)
@@ -28,6 +29,7 @@ const ManageAdmin = () => {
 
 
 
+
     const handleManage = async (e) =>{
         e.preventDefault();
         const form = e.target;
@@ -42,7 +44,14 @@ const ManageAdmin = () => {
         const manageData = await axiosSecure.patch(`/manageItems/${bookingsId}`, manageUpdate);
 
         console.log(manageData.data)
-        
+        if(manageData.data.modifiedCount > 0){
+            Swal.fire({
+                title: "Lets Go!",
+                text: "Booked Items is Ontheway.",
+                icon: "success"
+              });
+              navigate( -1);
+        }
         
 
     }
@@ -60,7 +69,7 @@ const ManageAdmin = () => {
                             <span className="label-text text-white">Date</span>
                         </label>
                         <input type="date" name="date" placeholder="Date" className="input input-bordered" />
-                        {/* {errors.photo && <span className="text-red-500">PhotoURL is required</span>} */}
+                        
                     </div>
 
                     <div className="form-control ">
@@ -80,11 +89,12 @@ const ManageAdmin = () => {
 
                             </select>
                         </label>
-                        {/* {errors.role && <span className="text-red-500">Role is required</span>} */}
+                        
                     </div>
 
                     <div className="my-6">
-                        <input type="submit" className="btn btn-outline btn-primary" value="Manage Book" />
+                    <input type="submit" className="btn btn-outline btn-primary" value="Manage Book" />
+                        
                     </div>
 
                 </form>
