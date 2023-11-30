@@ -77,9 +77,9 @@ const Header = () => {
                         </div>
 
                         <div className="stat place-items-center " >
-                            <div className="stat-title">New Registers</div>
+                            <div className="stat-title">Total Delivered</div>
                             <div className="stat-value">
-                            <CountUp end={100} duration={5}> </CountUp></div>
+                            <CountUp end={15} duration={4}> </CountUp></div>
                             <div className="stat-desc">↘︎ 90 (14%)</div>
                         </div>
 
